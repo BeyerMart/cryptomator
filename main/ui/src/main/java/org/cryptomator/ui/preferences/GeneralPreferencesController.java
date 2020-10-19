@@ -2,6 +2,7 @@ package org.cryptomator.ui.preferences;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
@@ -47,6 +48,7 @@ public class GeneralPreferencesController implements FxController {
 	private final ResourceBundle resourceBundle;
 	private final Application application;
 	private final Environment environment;
+	private final BooleanBinding multipleKeychainsAvailable;
 	private Optional<KeychainAccessStrategy> keychain;
 	public ChoiceBox<UiTheme> themeChoiceBox;
 	public ChoiceBox<KeychainBackend> keychainBackendChoiceBox;
@@ -69,6 +71,13 @@ public class GeneralPreferencesController implements FxController {
 		this.resourceBundle = resourceBundle;
 		this.application = application;
 		this.environment = environment;
+		multipleKeychainsAvailable = new BooleanBinding() {
+			@Override
+			protected boolean computeValue() {
+				if (keychainBackendChoiceBox == null) return false;
+				return (keychainBackendChoiceBox.getItems().size() > 1);
+			}
+		};
 	}
 
 	@FXML
@@ -135,6 +144,14 @@ public class GeneralPreferencesController implements FxController {
 
 	public LicenseHolder getLicenseHolder() {
 		return licenseHolder;
+	}
+
+	public Boolean getMultipleKeychainsAvailable() {
+		return multipleKeychainsAvailable.get();
+	}
+
+	public BooleanBinding multipleKeychainsAvailableProperty() {
+		return multipleKeychainsAvailable;
 	}
 
 

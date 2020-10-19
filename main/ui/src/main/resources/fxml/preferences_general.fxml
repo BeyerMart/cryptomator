@@ -39,7 +39,7 @@
 			<Hyperlink styleClass="hyperlink-underline" text="%preferences.general.debugDirectory" onAction="#showLogfileDirectory"/>
 		</HBox>
 
-		<HBox spacing="6" alignment="CENTER_LEFT">
+		<HBox spacing="6" alignment="CENTER_LEFT" disable="${!controller.multipleKeychainsAvailable}">
 			<Label text="%preferences.general.keychainBackend"/>
 			<ChoiceBox fx:id="keychainBackendChoiceBox"/>
 		</HBox>
